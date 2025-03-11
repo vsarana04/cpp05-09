@@ -1,0 +1,89 @@
+#include "Form.hpp"
+#include "Bureaucrat.hpp"
+
+Form::Form() : name("default"), isSigned(false), gradeToSign(1), gradeToExecute(1)
+{
+    std::cout << "Default constructor called" << std::endl;
+    return ;
+}
+
+Form::Form(const std::string name, const int gradeToSign, const int gradeToExecute) : name(name), isSigned(false), gradeToSign(gradeToSign), gradeToExecute(gradeToExecute)
+{
+    std::cout << "Parametric constructor called" << std::endl;
+    if (gradeToSign < 1 || gradeToExecute < 1)
+        throw Form::GradeTooHighException();
+    if (gradeToSign > 150 || gradeToExecute > 150)
+        throw Form::GradeTooLowException();
+    return ;
+}
+
+Form::Form(const Form &other) : name(other.name), isSigned(other.isSigned), gradeToSign(other.gradeToSign), gradeToExecute(other.gradeToExecute)
+{
+    std::cout << "Copy constructor called" << std::endl;
+    return ;
+}
+
+Form &Form::operator=(const Form &other)
+{
+    std::cout << "Assignation operator called" << std::endl;
+    if (this != &other)
+    {
+        this->isSigned = other.isSigned;
+    }
+    return (*this);
+}
+
+Form::~Form()
+{
+    std::cout << "Destructor called" << std::endl;
+    return ;
+}
+
+std::string Form::getName() const
+{
+    return (this->name);
+}
+
+bool Form::getIsSigned() const
+{
+    return (this->isSigned);
+}
+
+int Form::getGradeToSign() const
+{
+    return (this->gradeToSign);
+}
+
+int Form::getGradeToExecute() const
+{
+    return (this->gradeToExecute);
+}
+
+void Form::beSigned(const Bureaucrat &bureaucrat)
+{
+    if (bureaucrat.getGrade() > this->gradeToSign)
+        throw Form::GradeTooLowException();
+    this->isSigned = true;
+    return ;
+}
+
+const char* Form::GradeTooHighException::what() const throw()
+{
+    return ("Grade is too high");
+}
+
+const char* Form::GradeTooLowException::what() const throw()
+{
+    return ("Grade is too low");
+}
+
+std::ostream &operator<<(std::ostream &out, const Form &obj)
+{
+    out << "Form " << obj.getName() << " is ";
+    if (obj.getIsSigned())
+        out << "signed";
+    else
+        out << "not signed";
+    out << " and requires grade " << obj.getGradeToSign() << " to sign and grade " << obj.getGradeToExecute() << " to execute";
+    return (out);
+}
