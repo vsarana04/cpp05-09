@@ -49,7 +49,8 @@ void    test2()
     std::cout << "End of test2" << std::endl;
 }
 
-void test3() {
+void test3()
+{
     try {
         Form f("Form1", 50, 25);
         Bureaucrat alice("Alice", 30);
@@ -57,30 +58,35 @@ void test3() {
 
         std::cout << f << std::endl;
 
-        alice.signForm(f); // Успішне підписання
+        alice.signForm(f); // success sign
         std::cout << f << std::endl;
 
-        bob.signForm(f); // Спроба підписати вже підписану форму
+        bob.signForm(f); // try to sign again
     } catch (const std::exception& e) {
         std::cerr << "Exception: " << e.what() << std::endl;
     }
     std::cout << "End of test3" << std::endl;
 }
 
-void test4() {
-    try {
-        // Тест із некоректними параметрами форми
-        Form invalidForm("InvalidForm", 0, 25); // Викидає виключення
-    } catch (const std::exception& e) {
+void test4()
+{
+    try
+    {
+        //incorrect grade
+        Form invalidForm("InvalidForm", 0, 25); //throws exception
+    }
+    catch (const std::exception& e) {
         std::cerr << "Exception: " << e.what() << std::endl;
     }
 
-    try {
+    try
+    {
         Form f("Form2", 75, 100);
         Bureaucrat bob("Bob", 149);
 
-        bob.signForm(f); // Недостатній рейтинг для підписання
-    } catch (const std::exception& e) {
+        bob.signForm(f); //not enough grade to sign
+    }
+    catch (const std::exception& e) {
         std::cerr << "Exception: " << e.what() << std::endl;
     }
     std::cout << "End of test4" << std::endl;
@@ -92,7 +98,8 @@ int main()
 {
     //test1();
     //test2();
-    test3();
+    //test3();
+    test4();
     return (0);
 
 }

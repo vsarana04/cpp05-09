@@ -6,11 +6,11 @@ Bureaucrat::Bureaucrat()
     return ;
 }
 
-Bureaucrat::Bureaucrat(const std::string name, int grade) : name(name), grade(grade)
+Bureaucrat::Bureaucrat(const std::string &name, int grade) : name(name), grade(grade)
 {
-    if (this->grade < 1)
+    if (grade < 1)
         throw Bureaucrat::GradeTooHighException();
-    else if (this->grade > 150)
+    else if (grade > 150)
         throw Bureaucrat::GradeTooLowException();
     std::cout << "Parametric constructor called" << std::endl;
     return ;
@@ -27,7 +27,7 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
 {
     if (this != &other)
     {
-        this->grade = other.grade;
+        grade = other.grade;
     }
     std::cout << "Assignation operator called" << std::endl;
     return (*this);
@@ -39,28 +39,28 @@ Bureaucrat::~Bureaucrat()
     return ;
 }
 
-std::string Bureaucrat::getName() const
+const std::string &Bureaucrat::getName() const
 {
-    return (this->name);
+    return (name);
 }
 
 int Bureaucrat::getGrade() const
 {
-    return (this->grade);
+    return (grade);
 }
 
 void Bureaucrat::incrementGrade()
 {
-    this->grade--;
-    if (this->grade <= 1)
+    grade--;
+    if (grade <= 1)
         throw Bureaucrat::GradeTooHighException();
     return ;
 }
 
 void Bureaucrat::decrementGrade()
 {
-    this->grade++;
-    if (this->grade >= 150)
+    grade++;
+    if (grade >= 150)
         throw Bureaucrat::GradeTooLowException();
     return ;
 }
